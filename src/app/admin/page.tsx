@@ -57,26 +57,22 @@ export default async function AdminPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-8">
-      <div className="mx-auto max-w-6xl space-y-6">
-
-        {/* ✅ Header with Logout */}
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-slate-900">
-            Admin Dashboard
-          </h1>
+    <main className="space-y-6">
+      <div className="space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div>
+            <p className="text-sm font-medium text-slate-500">Welcome, Admin</p>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Admin Dashboard</h1>
+          </div>
           <LogoutButton />
         </div>
 
         <AnalyticsCharts analytics={analyticsRes} />
 
-        <section>
-          <h2 className="mb-3 text-xl font-semibold">
-            Issue Management
-          </h2>
+        <section className="space-y-3">
+          <h2 className="text-xl font-semibold text-slate-900">Issue Management</h2>
           <AdminIssueTable initialIssues={issues} />
         </section>
-
       </div>
     </main>
   );

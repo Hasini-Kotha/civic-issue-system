@@ -25,14 +25,20 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: any) {
-      if (user) token.role = (user as { role: string }).role;
+    async jwt({ token, user }: { token: Record<string, unknown>; user?: { role?: string } }) {
+      if (user?.role) token.role = user.role;
       return token;
     },
-    async session({ session, token }: any) {
+    async session({
+      session,
+      token,
+    }: {
+      session: { user?: { id?: string; role?: string }; expires?: string };
+      token: Record<string, unknown>;
+    }) {
       if (session.user) {
-        session.user.id = token.sub ?? "";
-        session.user.role = token.role ?? "USER";
+        session.user.id = (token.sub as string | undefined) ?? "";
+        session.user.role = (token.role as string | undefined) ?? "USER";
       }
       return session;
     },

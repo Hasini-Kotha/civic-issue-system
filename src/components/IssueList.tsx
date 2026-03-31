@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import { StatusBadge } from "@/components/StatusBadge";
-import { FeedbackForm } from "@/components/FeedbackForm";
+import { IssueCard } from "@/components/IssueCard";
 
 type Issue = {
   id: string;
@@ -32,37 +30,58 @@ export function IssueList() {
   const hasIssues = useMemo(() => issues.length > 0, [issues.length]);
 
   return (
-    <section className="space-y-4">
-      <h2 className="text-xl font-semibold">Track Reported Issues</h2>
-      <div className="grid gap-2 sm:grid-cols-3">
-        {["category", "severity", "status"].map((name) => (
-          <input
-            key={name}
-            className="rounded border border-slate-300 px-3 py-2 text-sm"
-            placeholder={`Filter by ${name}`}
-            value={filters[name as keyof typeof filters]}
-            onChange={(e) => setFilters((prev) => ({ ...prev, [name]: e.target.value.toUpperCase() }))}
-          />
-        ))}
+    <section className="space-y-5">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-slate-900">Track Reported Issues</h2>
+          <button
+            onClick={() => setFilters({ category: "", severity: "", status: "" })}
+            className="rounded-xl border border-slate-300 px-3 py-2 text-xs font-medium text-slate-700 transition-all duration-200 hover:scale-105 hover:bg-slate-100"
+          >
+            Clear filters
+          </button>
+        </div>
+
+        <div className="grid gap-2 sm:grid-cols-3">
+          <select
+            className="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+            value={filters.category}
+            onChange={(e) => setFilters((prev) => ({ ...prev, category: e.target.value }))}
+          >
+            <option value="">All categories</option>
+            <option value="ROAD">Road</option>
+            <option value="WASTE">Waste</option>
+            <option value="WATER">Water</option>
+            <option value="TRAFFIC">Traffic</option>
+            <option value="STREETLIGHT">Streetlight</option>
+          </select>
+          <select
+            className="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+            value={filters.severity}
+            onChange={(e) => setFilters((prev) => ({ ...prev, severity: e.target.value }))}
+          >
+            <option value="">All severities</option>
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+          </select>
+          <select
+            className="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+            value={filters.status}
+            onChange={(e) => setFilters((prev) => ({ ...prev, status: e.target.value }))}
+          >
+            <option value="">All statuses</option>
+            <option value="UNDER_REVIEW">Under Review</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="RESOLVED">Resolved</option>
+          </select>
+        </div>
       </div>
-      {!hasIssues && <p className="text-sm text-slate-600">No issues found.</p>}
-      <div className="grid gap-3">
+
+      {!hasIssues && <p className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">No issues found.</p>}
+      <div className="grid gap-4 md:grid-cols-2">
         {issues.map((issue) => (
-          <article key={issue.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="mb-2 flex items-center justify-between">
-              <h3 className="font-semibold">{issue.category}</h3>
-              <StatusBadge status={issue.status} />
-            </div>
-            <p className="text-sm text-slate-700">{issue.description}</p>
-            <p className="mt-1 text-xs text-slate-500">Severity: {issue.severity}</p>
-            {issue.duplicateOfId && <p className="text-xs text-amber-700">Potential duplicate of {issue.duplicateOfId}</p>}
-            <div className="mt-2 flex flex-wrap gap-2">
-              {issue.images?.map((image) => (
-                <Image key={image} src={image} alt="Issue" width={80} height={80} className="h-20 w-20 rounded object-cover" />
-              ))}
-            </div>
-            {issue.status === "RESOLVED" && <FeedbackForm issueId={issue.id} />}
-          </article>
+          <IssueCard key={issue.id} issue={issue} />
         ))}
       </div>
     </section>
