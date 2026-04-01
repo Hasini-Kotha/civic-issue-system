@@ -20,6 +20,7 @@
     "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "leaflet": "^1.9.4",
     "next": "16.2.1",
     "next-auth": "^4.24.13",
     "prisma": "^5.22.0",
@@ -27,6 +28,7 @@
     "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.72.0",
+    "react-leaflet": "^5.0.0",
     "string-similarity": "^4.0.4",
     "zod": "^4.3.6"
   },

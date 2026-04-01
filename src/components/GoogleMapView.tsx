@@ -1,17 +1,31 @@
 "use client";
 
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "@/lib/leaflet";
+
 export function GoogleMapView({ lat, lng }: { lat: number; lng: number }) {
-  const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  const src = `https://www.google.com/maps/embed/v1/view?key=${key}&center=${lat},${lng}&zoom=17`;
+  if (!lat || !lng) {
+    return (
+      <div className="flex h-56 items-center justify-center rounded-xl border border-slate-200 text-sm text-slate-500">
+        Location not available
+      </div>
+    );
+  }
+
   return (
     <div className="h-56 w-full overflow-hidden rounded-xl border border-slate-200">
-      {key ? (
-        <iframe title="Issue location map" width="100%" height="100%" style={{ border: 0 }} src={src} loading="lazy" />
-      ) : (
-        <div className="flex h-full items-center justify-center text-sm text-slate-500">
-          Add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to show map.
-        </div>
-      )}
+      <MapContainer
+        center={[lat, lng]}
+        zoom={16}
+        className="h-full w-full"
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[lat, lng]}>
+          <Popup>Issue Location</Popup>
+        </Marker>
+      </MapContainer>
     </div>
   );
 }
