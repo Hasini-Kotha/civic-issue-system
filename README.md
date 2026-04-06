@@ -8,7 +8,7 @@ Production-style full-stack web app for reporting civic issues with:
 - Optional Cloudinary image storage (local fallback)
 
 ## Tech Stack
-- Frontend: Next.js + Tailwind CSS
+- Frontend: React + Tailwind CSS
 - Backend: Next.js Route Handlers (`/api/...`)
 - DB: PostgreSQL
 - ORM: Prisma
