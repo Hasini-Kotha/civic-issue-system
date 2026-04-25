@@ -3,7 +3,7 @@
 Production-style full-stack web app for reporting civic issues with:
 - Public user dashboard (anonymous reporting + tracking)
 - Admin dashboard (auth-protected management, feedback monitoring, analytics)
-- Next.js App Router + API routes
+- Next.js App Router + API routes 
 - PostgreSQL + Prisma ORM
 - Optional Cloudinary image storage (local fallback)
 
